@@ -1,0 +1,61 @@
+{% load i18n %}
+<div class="btn-group export">
+  <a class="dropdown-toggle btn btn-default btn-sm" data-toggle="dropdown" href="#">
+    <i class="icon-share"></i> 导入 <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+      <li><a data-toggle="modal" data-target="#export-modal-import-excel"><i class="icon-circle-arrow-down"></i> 导入 Excel</a></li>
+  </ul>
+    <script>
+        function fileChange(target){
+//检测上传文件的类型
+            var imgName = document.all.submit_upload.value;
+            var ext,idx;
+            if (imgName == ''){
+                document.all.submit_upload_b.disabled=true;
+                alert("请选择需要上传的 xls 文件!");
+                return;
+            } else {
+                idx = imgName.lastIndexOf(".");
+                if (idx != -1){
+                    ext = imgName.substr(idx+1).toUpperCase();
+                    ext = ext.toLowerCase( );
+{#                    alert("ext="+ext);#}
+                    if (ext != 'xls' && ext != 'xlsx'){
+                        document.all.submit_upload_b.disabled=true;
+                        alert("只能上传 .xls 类型的文件!");
+
+                        return;
+                    }
+                } else {
+                    document.all.submit_upload_b.disabled=true;
+                    alert("只能上传 .xls 类型的文件!");
+                    return;
+                }
+            }
+
+        }
+    </script>
+    <div id="export-modal-import-excel" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form method="post" action="" enctype="multipart/form-data">
+              {% csrf_token %}
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">导入 Excel</h4>
+          </div>
+          <div class="modal-body">
+               <input type="file" onchange="fileChange(this)" name="excel" id="submit_upload">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+            <button class="btn btn-success" type="submit" id="submit_upload_b"><i class="icon-share"></i> 导入</button>
+          </div>
+          </form>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dalog -->
+    </div><!-- /.modal -->
+
+</div>
