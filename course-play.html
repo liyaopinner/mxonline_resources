@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+	<title>12.2 xss攻击与防护 - 慕学在线网</title>
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/animate.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+    
+    <link rel="stylesheet" type="text/css" href="../css/muke/base.css" />
+    <link rel="stylesheet" type="text/css" href="../css/muke/common-less.css" />
+    <link rel="stylesheet" type="text/css" href="../css/muke/course/learn-less.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/mooc.css" />
+    <link rel="stylesheet" type="text/css" href="../css/muke/course/common-less.css">
+
+    <script src="../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" type="text/css" href="../css/video-js.min.css">
+    <script src="../js/video.min.js" type="text/javascript"></script>
+
+    <style>
+        .video-js .vjs-big-play-button{
+            top: 50%;
+            left: 50%;
+        }
+    </style>
+
+</head>
+<body>
+<section class="headerwrap ">
+    <header>
+		<div  class=" header">
+ 			<div class="top">
+				<div class="wp">
+					<div class="fl"><p>服务电话：<b>33333333</b></p></div>
+					<!--登录后跳转-->
+
+                        
+                        <div class="personal">
+                            <dl class="user fr">
+                                <dd>bobby<img class="down fr" src="../images/top_down.png"/></dd>
+                                <dt><img width="20" height="20" src="../media/image/2016/12/default_big_14.png"/></dt>
+                            </dl>
+                            <div class="userdetail">
+                            	<dl>
+	                                <dt><img width="80" height="80" src="../media/image/2016/12/default_big_14.png"/></dt>
+	                                <dd>
+	                                    <h2>django</h2>
+	                                    <p>bobby</p>
+	                                </dd>
+                                </dl>
+                                <div class="btn">
+	                                <a class="personcenter fl" href="usercenter-info.html">进入个人中心</a>
+	                                <a class="fr" href="/logout/">退出</a>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="usercenter-message.html">
+                            <div class="msg-num"> <span id="MsgNum">0</span></div>
+                        </a>
+                    
+
+
+				</div>
+			</div>
+
+            <div class="middle">
+                <div class="wp">
+                    <a href="index.html"><img class="fl" src="../images/logo.jpg"/></a>
+                    <div class="searchbox fr">
+                        <div class="selectContainer fl">
+                            <span class="selectOption" id="jsSelectOption" data-value="course">
+                                公开课
+                            </span>
+                            <ul class="selectMenu" id="jsSelectMenu">
+                                <li data-value="course">公开课</li>
+                                <li data-value="org">课程机构</li>
+                                <li data-value="teacher">授课老师</li>
+                            </ul>
+                        </div>
+                        <input id="search_keywords" class="fl" type="text" value="" placeholder="请输入搜索内容"/>
+                        <img class="search_btn fr" id="jsSearchBtn" src="../images/search_btn.png"/>
+                    </div>
+                </div>
+            </div>
+            
+            
+			<nav>
+				<div class="nav">
+					<div class="wp">
+						<ul>
+							<li ><a href="index.html">首页</a></li>
+							<li class="active">
+								<a href="course-list.html">
+									公开课<img class="hot" src="../images/nav_hot.png">
+								</a>
+							</li>
+							<li >
+								<a href="teachers-list.html">授课教师</a>
+							</li>
+							<li ><a href="org-list.html">授课机构</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+            
+			</div>
+    </header>
+</section>
+<!--crumbs start-->
+
+    <section>
+	<div class="wp">
+		<div class="crumbs">
+			<ul>
+				<li><a href="index.html">首页</a>></li>
+                <li><a href="course-list.html">公开课程</a>></li>
+				<li><a href="course-detail.html">常见网络攻击</a>></li>
+                <li>12.2 xss攻击与防护</li>
+			</ul>
+		</div>
+	</div>
+</section>
+    <div style="width:1200px;height:675px; margin-left: 340px">
+        <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1200"
+              poster="http://video-js.zencoder.com/oceans-clip.png"
+              data-setup="{}">
+            <source src="http://of66as8gb.bkt.clouddn.com/12.2%20xss%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86%E5%8F%8A%E9%98%B2%E8%8C%83.mp4" type='video/mp4'>
+        </video>
+    </div>
+    <div class="course-info-main clearfix w has-progress">
+
+        <div class="info-bar clearfix">
+        <div class="content-wrap clearfix">
+            <div class="content">
+                <div class="mod-tab-menu">
+                    <ul class="course-menu clearfix">
+                        <li><a class="ui-tabs-active active" id="learnOn"  href="course-video.html"><span>章节</span></a></li>
+                        <li><a id="commentOn" class="" href="course-comment.html"><span>评论</span></a></li>
+                    </ul>
+                </div>
+                <div id="notice" class="clearfix">
+                    <div class="l"> <strong>课程公告:</strong> <a  href="javascript:void(0)">Spring的文档以及相关的jar文件已上传</a> </div>
+                </div>
+
+                <div class="mod-chapters">
+                    
+                    <div class="chapter chapter-active" >
+                        <h3>
+                            <strong><i class="state-expand"></i>第一章 基础知识</strong>
+                        </h3>
+                        <ul class="video">
+                            
+                            <li class="active2">
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">1.1 hello world (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">1.2 基本概念 (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">django settings.py 配置 (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    
+                    <div class="chapter chapter-active" >
+                        <h3>
+                            <strong><i class="state-expand"></i>第二章 进阶开发</strong>
+                        </h3>
+                        <ul class="video">
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">2.1 test (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">2.2 test2 (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    
+                    <div class="chapter chapter-active" >
+                        <h3>
+                            <strong><i class="state-expand"></i>第三章 需求分析和数据库设计</strong>
+                        </h3>
+                        <ul class="video">
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">3.1 django app设计 (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">3.2 django model设计 (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">3.3 django users models设计 (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">3.4 django course models设计 (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">3.5 organization models设计 (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    
+                    <div class="chapter chapter-active" >
+                        <h3>
+                            <strong><i class="state-expand"></i>第四章 django基础知识回顾</strong>
+                        </h3>
+                        <ul class="video">
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">4.1 django settings配置 (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">4.2 models设计 (20)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    
+                    <div class="chapter chapter-active" >
+                        <h3>
+                            <strong><i class="state-expand"></i>第五章 通过xadmin搭建后台管理系统</strong>
+                        </h3>
+                        <ul class="video">
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">5.1 django admin讲解 (10)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a target="_blank" href='/video/3662' class="J-media-item studyvideo">5.2 xadmin的安装和注册 (0)
+                                    <i class="study-state"></i>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    
+                </div>
+
+            </div>
+            <div class="aside r">
+                <div class="bd">
+
+                    <div class="box mb40">
+                        <h4>资料下载</h4>
+                        <ul class="downlist">
+                            
+                            <li>
+                                <span ><i class="aui-iconfont aui-icon-file"></i>&nbsp;&nbsp;前端页面</span>
+                                <a href="../media/course/resource/2016/11/media.zip" class="downcode" target="_blank" download="" data-id="274" title="">下载</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    <div class="box mb40">
+                        <h4>讲师提示</h4>
+                        <div class="teacher-info">
+                            <a href="/u/315464/courses?sort=publish" target="_blank">
+                                <img src='../media/teacher/2016/11/aobama_CXWwMef.png' width='80' height='80' />
+                            </a>
+        <span class="tit">
+          <a href="/u/315464/courses?sort=publish" target="_blank">bobby</a>
+        </span>
+                            <span class="job">xxx</span>
+                        </div>
+                        <div class="course-info-tip">
+                            <dl class="first">
+                                <dt>课程须知</dt>
+                                <dd class="autowrap">python基础你需要有</dd>
+                            </dl>
+                            <dl>
+                                <dt>老师告诉你能学到什么？</dt>
+                                <dd class="autowrap">django的进阶开发</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+
+                    <div class="cp-other-learned  js-comp-tabs">
+                        <div class="cp-header clearfix">
+                            <h2 class="cp-tit l">该课的同学还学过</h2>
+                        </div>
+                        <div class="cp-body">
+                            <div class="cp-tab-pannel js-comp-tab-pannel" data-pannel="course" style="display: block">
+                                <!-- img 200 x 112 -->
+                                <ul class="other-list">
+                                    
+                                    <li class="curr">
+                                        <a href="course-detail.html" target="_blank">
+                                            <img src="../media/courses/2016/11/540e57300001d6d906000338-240-135_n0L8vbw.jpg" alt="django与vuejs实战项目2">
+                                            <span class="name autowrap">django与vuejs实战项目2</span>
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="curr">
+                                        <a href="course-detail.html" target="_blank">
+                                            <img src="../media/courses/2016/12/python面向对象.jpg" alt="python面向对象">
+                                            <span class="name autowrap">python面向对象</span>
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="curr">
+                                        <a href="course-detail.html" target="_blank">
+                                            <img src="../media/courses/2016/12/python文件处理.jpg" alt="python文件处理">
+                                            <span class="name autowrap">python文件处理</span>
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="curr">
+                                        <a href="course-detail.html" target="_blank">
+                                            <img src="../media/courses/2016/11/mysql.jpg" alt="django入门">
+                                            <span class="name autowrap">django入门</span>
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="curr">
+                                        <a href="course-detail.html" target="_blank">
+                                            <img src="../media/courses/2016/12/mysql.jpg" alt="xadmin进阶开发">
+                                            <span class="name autowrap">xadmin进阶开发</span>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                            <div class="cp-tab-pannel js-comp-tab-pannel" data-pannel="plan">
+                                <ul class="other-list">
+                                    <li class="curr">
+                                        <a href="/course/programdetail/pid/31?src=sug" target="_blank">
+                                            <img src="http://img.mukewang.com/56551e6700018b0c09600720-240-135.jpg" alt="Java工程师">
+                                            <span class="name autowrap">Java工程师</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>    </div>
+        </div>
+        <div class="clear"></div>
+
+    </div>
+
+</div>
+</div>
+
+<footer>
+		<div class="footer">
+			<div class="wp">
+				<ul class="cont">
+					<li class="logo"><a href=""><img src="../images/footlogo.png"/></a></li>
+					<li class="code"><img src="../images/code.jpg"/><p class="center">扫描关注微信</p></li>
+					<li class="third"><img class="fl" src="../images/tell.png"/><p class="tell">33333333</p><p class="time">周一至周日 9:00-18:00</p></li>
+				</ul>
+
+			</div>
+			<p class="line"></p>
+			<div class="wp clear">
+                <span class="fl">? 2016 www.projectsedu.com 慕学在线-在线学习交流平台 保留所有权利</span>
+                <span class="fr">copyright ? 2016 ICP备案证书号：蜀ICP备xxxxx号-1</span>
+			</div>
+		</div>
+	</footer>
+
+<section>
+    <ul class="sidebar">
+        <li class="qq">
+            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2023525077&site=qq&menu=yes"></a>
+        </li>
+        <li class="totop"></li>
+    </ul>
+</section>
+<script src="../js/selectUi.js" type='text/javascript'></script>
+<script src="../js/deco-common.js" type='text/javascript'></script>
+<script type="text/javascript" src="../js/plugins/laydate/laydate.js"></script>
+<script src="../js/plugins/layer/layer.js"></script>
+<script src="../js/plugins/queryCity/js/public.js" type="text/javascript"></script>
+<script src="../js/unslider.js" type="text/javascript"></script>
+<script src="../js/plugins/jquery.scrollLoading.js"  type="text/javascript"></script>
+<script src="../js/deco-common.js"  type="text/javascript"></script>
+
+</body>
+</html>
